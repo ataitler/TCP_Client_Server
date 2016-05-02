@@ -1,0 +1,7 @@
+c:\users\ataitler\documents\visual studio 2013\Projects\TCPClient\TCPClient\obj\Debug\TCPClient.csprojResolveAssemblyReference.cache
+c:\users\ataitler\documents\visual studio 2013\Projects\TCPClient\TCPClient\bin\Debug\TCPClient.exe
+c:\users\ataitler\documents\visual studio 2013\Projects\TCPClient\TCPClient\bin\Debug\TCPClient.pdb
+c:\users\ataitler\documents\visual studio 2013\Projects\TCPClient\TCPClient\obj\Debug\TCPClient.exe
+c:\users\ataitler\documents\visual studio 2013\Projects\TCPClient\TCPClient\obj\Debug\TCPClient.pdb
+c:\users\ataitler\documents\visual studio 2013\Projects\TCPClient\TCPClient\obj\Debug\TCPClient.ChatScreen.resources
+c:\users\ataitler\documents\visual studio 2013\Projects\TCPClient\TCPClient\obj\Debug\TCPClient.csproj.GenerateResource.Cache
