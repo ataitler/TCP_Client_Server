@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
@@ -20,6 +21,7 @@ namespace TCPClient
         }
 
         private const int port = 11000;
+        Random rand;
 
         // ManualResetEvent instances signal completion.
         private static ManualResetEvent connectDone = new ManualResetEvent(false);
@@ -30,6 +32,7 @@ namespace TCPClient
 
         private void StartClient()
         {
+            rand = new Random(42);
             // Connect to a remote device.
             try
             {
@@ -92,14 +95,26 @@ namespace TCPClient
                 string rec = Encoding.ASCII.GetString(state.buffer, 0, bytesRead);
                 response = "Recieved: " + rec;
                 Console.WriteLine(response);
-                if (rec.IndexOf("ATTACK_RIGHT") > -1)
+                if (rec.IndexOf("AttackMiddle") > -1)
                 {
                     Console.WriteLine("Thank You, action set!");
                 }
-                else
+                else if (rec.IndexOf("<Message>") > -1)
                 {
-                    Console.WriteLine("Thank You");
-                    Send(client, "Thank You!");
+                    try
+                    {
+                        string pattern = @"<Message>:(\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*),(\-?\d+\.?\d*)";
+                        Match m = Regex.Match(rec, pattern);
+                        float ax = 700*Math.Sign(float.Parse(m.Groups[5].Value) - float.Parse(m.Groups[1].Value));
+                        float ay = 700*Math.Sign(float.Parse(m.Groups[6].Value) - float.Parse(m.Groups[2].Value));
+                        string action = ax.ToString() + "," + ay.ToString();
+                        Console.WriteLine("Thank You, sending action:" + action);
+                        Send(client, action);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
                 
                 if (client.Connected)
